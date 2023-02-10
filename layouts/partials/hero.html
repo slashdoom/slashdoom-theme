@@ -1,0 +1,32 @@
+<section class="hero has-background-success-dark is-small">
+    <div class="hero-body">
+        <section class="section is-paddingless">
+            <div x-data="datetimeComponent()">
+                <p class="has-text-white has-text-right is-size-7" x-text="getTime()"></p>
+            </div>
+        </section>
+        <article class="media">
+            <figure class="media-left">
+                {{ with .Site.Params.hero.logo }}
+                <p class="image is-{{ .height }}x{{ .width }}">
+                    <a href="/">
+                        <img class="is-rounded has-background-white" src="{{ .src | relURL }}" height="{{ .height }}" width="{{ .width }}" alt="{{ .alt }}">
+                    </a>
+                </p>
+                {{ end }}
+            </figure>
+            <div class="media-content">
+                <div class="container title-custom">
+                    <a href="/">
+                        <p class="title has-text-white">
+                            {{ .Site.Params.hero.title | default "chocka.news"}}
+                        </p>
+                        <p class="subtitle has-text-white is-6">
+                            {{ .Site.Params.hero.subtitle | default "chocka.news"}}
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

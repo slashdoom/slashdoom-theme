@@ -1,0 +1,28 @@
+{{ define "main" }}
+  {{ $data := .Data }}
+  <div class="content">
+    <div class="section">
+      <div class="columns">
+        <div class="column"></div>
+        <div class="column is-half">
+          <table class="table is-narrow is-hoverable">
+            <tbody x-data="clickable()">
+              {{ range $key, $value := $data.Terms.ByCount }}
+              <tr x-bind:style="{ cursor: 'pointer' }" x-on:click="clicked('/tags/{{ $value.Name | urlize }}/')">
+                <th>{{ $value.Name }}</th>
+                <td align="right">
+                  <span class="tag is-normal is-primary">
+                    {{ $value.Count }}
+                  </span>
+                </td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </div>
+        <div class="column"></div>
+      </div>
+    </div>
+  </div>
+{{ end }}
+

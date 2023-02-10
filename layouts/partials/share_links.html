@@ -1,0 +1,41 @@
+{{ if or .Params.socialShare (and .Site.Params.socialShare (ne .Params.socialShare false)) }}
+<!-- Social Share Button HTML -->
+<span>
+  <!-- Twitter -->
+    <span class="icon">
+        <a href="//twitter.com/share?url={{ .Permalink }}&amp;text={{ .Title }}&amp;via={{ .Site.Author.twitter }}" target="_blank" title="Share on Twitter">
+            {{ partial "ionicon" (dict "icon" "logo-twitter")}}
+        </a>
+    </span>
+    <!-- Facebook -->
+    <span class="icon">
+        <a href="//www.facebook.com/sharer.php?u={{ .Permalink }}" target="_blank" title="Share on Facebook">
+            {{ partial "ionicon" (dict "icon" "logo-facebook")}}
+        </a>
+    </span>
+     <!-- Reddit -->
+    <span class="icon">
+        <a href="//reddit.com/submit?url={{ .Permalink }}&amp;title={{ .Title }}" target="_blank" title="Share on Reddit">
+            {{ partial "ionicon" (dict "icon" "logo-reddit")}}
+        </a>
+    </span>
+    <!-- HackerNews -->
+    <span class="icon">
+        <a href="//news.ycombinator.com/submitlink?u={{ .Permalink }}&t={{ .Title }}" target="_blank" title="Share on HackerNews">
+          {{ partial "ionicon" (dict "icon" "logo-hackernews")}}
+        </a>
+    </span>
+    <!-- LinkedIn -->
+    <span class="icon">
+        <a href="//www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}&amp;title={{ .Title }}" target="_blank" title="Share on LinkedIn">
+            {{ partial "ionicon" (dict "icon" "logo-linkedin")}}
+        </a>
+    </span>
+    <!-- Pinterest -->
+    <span class="icon">
+        <a href="//www.pinterest.com/pin/create/button/?url={{ .Permalink }}&amp;description={{ .Title }}" target="_blank" title="Share on Pinterest">
+            {{ partial "ionicon" (dict "icon" "logo-pinterest")}}
+        </a>
+    </span>
+</span>
+{{ end }}

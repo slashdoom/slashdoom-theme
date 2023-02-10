@@ -1,0 +1,59 @@
+{{ define "main" }}
+<div class="columns">
+    <div class="column is-three-quarters">
+        <section class="section">
+            <div class="content">
+                {{ if eq .Type "post" }}
+                    {{ partial "post_meta.html" . }}
+                    {{ if .Params.tags }}
+                    <div class="tags are-medium mt-2 mb-0">
+                        {{ range .Params.tags }}
+                        <span class="tag is-normal is-primary">
+                            <a class="has-text-link-light has-text-weight-semibold" href="{{ $.Site.LanguagePrefix | absURL }}tags/{{ . | urlize }}/">
+                                {{ . }}
+                            </a>
+                        </span>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                {{ end }}
+                <hr class="mb-1 mt-1"/>
+                {{ .Content }}
+                <hr class="mb-3 mt-0"/>
+                {{ if $.Param "socialShare" }}
+                <div class="list-inline footer-links">
+                    {{ partial "share_links" . }}
+                </div>
+                {{ end }}
+                {{ if .Site.Params.showRelatedPosts }}
+                    {{ range first 1 (where (where .Site.Pages ".Params.tags" "intersect" .Params.tags) "Permalink" "!=" .Permalink) }}
+                        {{ $.Scratch.Set "has_related" true }}
+                    {{ end }}
+
+                    {{ if $.Scratch.Get "has_related" }}
+                    <p class="title is-4">Also See</p>
+                    <ul>
+                        {{ $num_to_show := .Site.Params.related_content_limit | default 5 }}
+                        {{ range first $num_to_show (where (where .Site.Pages ".Params.tags" "intersect" .Params.tags) "Permalink" "!=" .Permalink) }}
+                        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                        {{ end }}
+                    </ul>
+                    {{ end }}
+                {{ end }}
+            </div>
+        </section>
+        
+    </div>
+    <div class="column">
+        <section class="section">
+            <p class="title is-4">Latest Articles</p>
+            {{ $posts := .Site.GetPage "/post" }}
+            {{ range $posts.Data.Pages.ByPublishDate.Reverse  | first 20 }}
+            <p class="title is-7">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </p>
+            {{ end }}
+        </section>
+    </div>
+</div>
+{{ end }}

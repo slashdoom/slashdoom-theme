@@ -1,0 +1,27 @@
+<span class="post-meta" style="display: flex; flex-direction: row; align-items: center; ">
+  {{ $lastmodstr := .Lastmod.Format "02 Jan 06" }}
+  {{ $datestr := .Date.Format "02 Jan 06" }}
+  {{ partial "ionicon" (dict "icon" "calendar" "width" "18" "height" "18")}}&nbsp;
+  Posted on {{ $datestr }}
+  {{ if ne $datestr $lastmodstr }}
+  &nbsp;
+  Last Modified $lastmodstr
+  {{ end }}
+  {{ if .Site.Params.readingTime }}
+  &nbsp;|&nbsp;{{ partial "ionicon" (dict "icon" "time" "width" "18" "height" "18")}}&nbsp;
+  {{ partial "readingtime" .}}
+  {{ end }}
+  {{ if .Site.Params.wordCount }}
+  &nbsp;|&nbsp;{{ partial "ionicon" (dict "icon" "book" "width" "18" "height" "18")}}&nbsp;
+  {{ .WordCount }}&nbsp;words
+  {{ end }}
+  {{ if not .Site.Params.hideAuthor }}
+  {{ if .Params.author }}
+  &nbsp;|&nbsp;{{ partial "ionicon" (dict "icon" "person" "width" "18" "height" "18")}}&nbsp;
+  {{ .Params.author | safeHTML }}
+  {{ else }}
+  &nbsp;|&nbsp;{{ partial "ionicon" (dict "icon" "person" "width" "18" "height" "18")}}&nbsp;
+  {{ .Site.Author.name | safeHTML }}
+  {{ end }}
+  {{ end }}
+</span>  

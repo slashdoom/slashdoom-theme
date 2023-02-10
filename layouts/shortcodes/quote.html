@@ -1,0 +1,21 @@
+{{ if (trim .Inner " \n") }}
+{{ $source := "" }}
+{{ if .IsNamedParams }}
+    {{ if .Get "source" }}
+        {{ $source = (.Get "source") }}
+    {{ end }}
+{{ else }}
+    {{ if .Get 0 }}
+        {{ $source = (.Get 0) }}
+    {{ end }}
+{{ end }}
+{{ $text := (.Inner) | markdownify }}
+<blockquote class="news-blockquote" cite="{{ $source }}">
+    {{ $text }}
+</blockquote>
+{{ if ne $source "" }}
+<p class="news-blockquote-cite">
+    <cite><a href="{{ $source }}" title="read more" target="_blank" rel="noreferrer">...read more.</a></cite>
+</p>
+{{ end }}
+{{ end }}

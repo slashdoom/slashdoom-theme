@@ -1,0 +1,266 @@
+{{ partial "header.html" . }}
+
+{{ partial "breaking.html" . }}
+
+{{ partial "hero.html" . }}
+
+<section class="section">
+    <div class="columns" x-data="{ 
+                                    title: '',
+                                    date: '',
+                                    time: '',
+                                    breaking : false,
+                                    source: '',
+                                    link: '',
+                                    imgattr: '',
+                                    archive: 'https://archive.vn/',
+                                    post_type: 'article',
+                                    draft: false,
+                                    quote: '',
+                                    commentary: '',
+                                    get datetime() {
+                                        var x
+                                        if (this.time) { 
+                                            x = this.date+'T'+this.time+':00'
+                                        } else {
+                                            x = this.date
+                                        }
+                                        return x
+                                    },
+                                    get folder() {
+                                        var x
+                                        x = this.date+'_'+this.title
+                                        x = x.replaceAll(' ','_')
+                                        x = x.replaceAll(/[^a-zA-Z0-9ĀāĒēĪīŌōŪū_\-]/gm, '')
+                                        x = x.replaceAll('Ā','ā')
+                                        x = x.replaceAll('Ē','ē')
+                                        x = x.replaceAll('Ī','ī')
+                                        x = x.replaceAll('Ō','ō')
+                                        x = x.replaceAll('Ū','ū')
+                                        x = x.toLowerCase()
+                                        x = x.slice(0,58)
+                                        return x
+                                    },
+                                    get output() { 
+                                        return `---
+title: ${this.title}
+date: ${this.datetime}
+breaking: ${this.breaking}
+source: ${this.source}
+link: ${this.link}
+imgattr: ${this.imgattr}
+iarchive: ${this.archive}
+post_type: ${this.post_type}
+draft: ${this.draft}
+---
+
+\{\{< quote source=&quot;${this.link}&quot; >\}\}
+${this.quote}
+\{\{< /quote >\}\}
+
+\{\{< commentary >\}\}
+${this.commentary}
+\{\{< /commentary >\}\}
+`
+                                    },
+    }">
+        <div class="column is-half">
+            <div class="content">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Title</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" x-model="title">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Date</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" type="date" x-model="date">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Time</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" type="time" x-model="time">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Breaking</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="checkbox" type="checkbox" x-model="breaking">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Source</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="select">              
+                                <select x-model="source">
+                                    <option value=""></option>
+                                    {{ range $a,$b := $.Site.Data.sources }}
+                                    <option value="{{ $a }}">{{ $b.name }}</option>
+                                    {{ end }}
+                                </select>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Link</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" x-model="link">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Img Attrib</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" x-model="imgattr">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Archive</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" x-model="archive">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Type</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="select"> 
+                                <select x-model="post_type">
+                                    <option value="ad">ad</option>
+                                    <option value="article">article</option>
+                                    <option value="cartoon">cartoon</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Draft</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="checkbox" type="checkbox" x-model="draft">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Quote</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <textarea class="textarea" x-model="quote" cols="60" rows="7"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Commentary</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <textarea class="textarea" x-model="commentary" cols="60" rows="7"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="content">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Folder</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" x-model="folder">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Article</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <textarea class="textarea" x-model="output" cols="60" rows="33"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label"></label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <button x-on:click="(function() {
+                                var dlLink = document.createElement('a');
+                                dlLink.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(output));
+                                dlLink.download = 'index.md';
+                                document.body.appendChild(dlLink);
+                                dlLink.click();
+                                document.body.removeChild(dlLink); } )
+                            ">Download</button>
+                        </div>             
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ partial "footer.html" . }}

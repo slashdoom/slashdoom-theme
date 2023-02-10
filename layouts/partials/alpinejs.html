@@ -1,0 +1,113 @@
+<script>
+
+    function darkMode() {
+        return {
+            showBox: dark,
+            change() {
+                if (dark) {
+                    dark = false;
+                    localStorage.setItem('darkMode', dark);
+                    link.href = '{{ "css/bulma-light.min.css" | relURL }}';
+                    this.showBox = dark;
+                } else {
+                    dark = true;
+                    localStorage.setItem('darkMode', dark);
+                    link.href = '{{ "css/bulma-dark.min.css" | relURL }}';
+                    this.showBox = dark;
+                }
+            },
+        }
+    }
+
+    function clickable() {
+        return {
+            clicked(url, newWindow = false) {
+                if (newWindow) {
+                    window.open = url;
+                } else {
+                    window.location = url;
+                }
+                
+            }
+        }
+    }
+
+    function dropdown() {
+        return {
+            show: false,
+            icon: "chevron-down",
+            svg: {
+                ['x-bind:width']() { return 24; },
+                ['x-bind:height']() { return 24; },
+                ['x-bind:fill']() { return "none"; },
+                ['x-bind:stroke']() { return "currentColor"; },
+                ['x-bind:stroke-width']() { return 2; },
+                ['x-bind:stroke-linecap']() { return "round"; },
+                ['x-bind:stroke-linejoin']() { return "round"; },
+            },
+            use: {
+                ['x-bind:href']() { return "{{ "img/feather-sprite.svg" | relURL }}" + "#" + this.icon; },
+            },
+            change() { 
+                this.show = !this.show 
+                if (this.show) {
+                    this.icon = "chevron-up";
+                }
+                else {
+                    this.icon = "chevron-down";
+                }
+            },
+            isOpen() { 
+                return {
+                    'status': this.show === true,
+                    'icon': this.icon
+                };
+            }
+        }
+    }
+
+    let logo = "";
+    let dark = false;
+    
+    // Get browser dark mode preference
+    let darkModeBrowserPref = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Check for exsiting user mode preference
+    let darkModeUserPref = localStorage.getItem('darkMode') === 'true';
+
+    // Set dark mode from preferences
+    if (darkModeUserPref) { 
+        dark = true;
+    }
+    else { 
+        if (darkModeBrowserPref) { 
+            dark = true;
+        } 
+    } 
+
+    // Get HTML head element 
+    let head = document.getElementsByTagName('HEAD')[0];
+
+    // Create new link Elements
+    let link = document.createElement('link');
+
+    // set the attributes for link element
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.title = 'main-css';
+    if (dark) {
+        link.href = "{{ "css/bulma-dark.min.css" | relURL }}";
+    }
+    else {
+        link.href = "{{ "css/bulma-light.min.css" | relURL }}";
+    }
+
+    // Append link element to HTML head 
+    head.appendChild(link);
+
+    // Debug console
+    logo = logo + " +-+-+-+-+-+-+-+-+-+-+-+ \n";
+    logo = logo + " |t|r|y|f|o|s|s|.|c|o|m| \n";
+    logo = logo + " +-+-+-+-+-+-+-+-+-+-+-+ \n";
+    console.log(logo);
+
+</script>

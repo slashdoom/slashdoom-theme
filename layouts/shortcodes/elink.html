@@ -1,0 +1,19 @@
+{{ $title := "TryFOSS.com" }}
+{{ $href := "https://tryfoss.com/" }}
+{{ if .IsNamedParams }}
+    {{ if .Get "href" }}
+        {{ $href = (.Get "href") }}
+    {{ end }}
+    {{ if .Get "title" }}
+        {{ $title = (.Get "title") }}
+    {{ end }}
+{{ else }}
+    {{ if .Get 0 }}
+        {{ $href = (.Get 0) }}
+    {{ end }}
+    {{ if .Get 1 }}
+        {{ $title = (.Get 1) }}
+    {{ end }}
+{{ end }}
+{{ $inner := (.Inner) | markdownify }}
+<a href="{{ $href }}" title="{{ $title }}" target="_blank" rel="noreferrer">{{ $inner }}</a>

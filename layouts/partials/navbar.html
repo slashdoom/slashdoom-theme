@@ -1,0 +1,76 @@
+<nav x-data="{ drop: false }" class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+      <a class="navbar-item" href="{{.Site.BaseURL | relURL}}">
+          <!-- .Site.Params.header.navbarTitle -->
+          {{- if .Site.Params.logo }}
+              {{ $logo := ( print "img/" .Site.Params.logo ) }}
+              <img src="{{ $logo | relURL }}">
+          {{- else }}
+              <p class="title is-family-code is-5 has-text-white-ter has-text-weight-semibold">{{ .Site.Title }}</p>
+          {{- end }}
+      </a>
+  
+      <a role="button"
+         class="navbar-burger burger" 
+         :class="{ 'is-active': drop }"
+         @click="drop = !drop"
+         aria-label="menu" 
+         aria-expanded="false" 
+         data-target="navbarBulma">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+      </a>
+  </div>
+
+  <div id="navbarBulma" class="navbar-menu" :class="{ 'is-active': drop }">
+      <!-- This "nav-menu" is hidden on mobile -->
+      <!-- Add the modifier "is-active" to display it on mobile -->
+      <div class="navbar-start">
+          <div class="navbar-item">
+              {{ $currentPage := . }}
+              {{ range .Site.Menus.main }}
+              {{ if .HasChildren }}
+              <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link" href="{{.URL}}">{{ .Name }}</a>
+                  <div class="navbar-dropdown is-boxed">
+                      {{ range .Children }}
+                      <a class="navbar-item is-dropdown" href="{{.URL}}">{{ .Name }}</a>
+                      {{ end }}
+                  </div>
+              </div>
+              {{ else }}
+              <a class="navbar-item" href="{{.URL}}">{{ .Name }}</a>
+              {{ end }}
+              {{ end }}
+          </div> 
+      </div>
+
+      <div class="navbar-end">
+          {{ if .Site.Author.github}}
+          <a class="navbar-item" target="blank" href="https://github.com/{{.Site.Author.github}}">
+            <div>
+                {{ partial "ionicon" (dict "icon" "logo-github" )}}
+            </div>
+          </a>
+          {{ end }}
+
+          {{ if .Site.Params.twitter}}
+          <a class="navbar-item" target="blank" href="https://twitter.com/{{.Site.Params.twitter}}">
+            <div>
+                {{ partial "ionicon" (dict "icon" "logo-twitter" )}}
+            </div>
+          </a>
+          {{ end }}
+
+          <a class="navbar-item" x-data="darkMode()" x-on:click="change()">
+              <div x-show="showBox">
+                {{ partial "ionicon" (dict "icon" "sunny" )}}
+              </div>
+              <div x-show="!showBox">
+                {{ partial "ionicon" (dict "icon" "moon" )}}
+              </div>
+          </a>
+      </div>
+  </div>
+</nav>

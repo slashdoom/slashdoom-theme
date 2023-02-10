@@ -1,0 +1,39 @@
+<aside>
+
+	<!-- recent -->
+	<div class="section">
+		<p class="subtitle is-5">Recent</p>
+		<div class="tags">
+		{{- if isset .Site.Taxonomies "recent" }}
+		{{- if not (eq (len .Site.Taxonomies.recent) 0) }}
+			{{- range $name, $items := .Site.Taxonomies.categories }}
+			<span class="tag is-link">
+				<a class="atag" href="{{ `recent/` | relLangURL }}{{ $name | urlize | lower }}">
+					{{ $name | title | humanize }}
+				</a>
+			</span>
+			{{- end }}
+		{{- end }}
+		{{- end }}
+		</div>
+	</div>
+
+	<!-- categories -->
+	<div class="section">
+		<p class="subtitle is-5">Categories</p>
+		<div class="tags">
+    	{{- if isset .Site.Taxonomies "categories" }}
+    	{{- if not (eq (len .Site.Taxonomies.categories) 0) }}
+      		{{- range $name, $items := .Site.Taxonomies.categories }}
+      		<span class="tag is-link">
+		  		<a class="atag" href="{{ `categories/` | relLangURL }}{{ $name | urlize | lower }}">
+					{{ $name | title | humanize }}
+				</a>
+	  		</span>
+    		{{- end }}
+		{{- end }}
+		{{- end }}
+		</div>
+	</div>
+
+</aside>

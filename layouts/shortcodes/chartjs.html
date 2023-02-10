@@ -1,0 +1,14 @@
+{{ $w := default "100" (.Get 0) }}
+{{ $h := default "300" (.Get 1) }}
+{{ $r := ( .Inner | chomp) }}
+{{ $seed := "chocka" }}
+{{ $id := delimit (shuffle (split (md5 $seed) "" )) "" }}
+<script src="{{ "js/chart.js" | relURL}}"></script>
+<div style="width: {{ $w }}%;height: {{ $h }}px;margin: 0 auto">
+    <canvas id="{{ $id }}"></canvas>
+</div>
+<script type="text/javascript">
+    var ctx = document.getElementById('{{ $id }}').getContext('2d');
+    var options = {{ $r | safeJS }};
+    new Chart(ctx, options);
+</script>

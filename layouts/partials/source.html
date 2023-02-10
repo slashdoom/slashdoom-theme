@@ -1,0 +1,5 @@
+{{ if (index .Site.Data.sources .Params.source).name }}
+    {{ (index .Site.Data.sources .Params.source).name }}
+{{ else }}
+    {{ .Params.source }}
+{{ end }}

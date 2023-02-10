@@ -1,0 +1,9 @@
+
+<div class="content has-text-centered is-size-7">
+    <p>
+        {{ "&copy;" | markdownify }}
+        {{ now.Format "2006" }}
+        {{ .Site.Title | default "TryFOSS.com" }}.
+        All rights reserved.
+    </p>
+</div>

@@ -1,0 +1,271 @@
+{{ $posts := .Paginate (where (where .Site.Pages "Type" "post") "PublishDate" "ge" (time "1900-01-01T00:00:00")) }}
+
+<h1 class="is-hidden">{{ .Site.Params.hero.title | default "chocka.news"}} News List - Page {{ $posts.PageNumber }}</h1>
+<div class="tile is-ancestor news-custom">  
+
+{{ $news := $posts.Pages.ByPublishDate.Reverse }}
+    <div class="tile is-parent">
+        <div class="content">
+            {{ $colCounter := 0 }}
+            {{ range $news }}
+                {{ $articleLink := .RelPermalink }}
+                {{ if eq $colCounter 0 }}
+                <div class="card article-card">
+                    <div class="card-content article-card-content">
+                        {{ if eq .Params.post_type "cartoon" }}
+                        {{ $image := .Resources.GetMatch "image*" }}
+                        {{ $thumbnail := $image }}
+                        {{ with $image }}
+                            {{ if gt .Width .Height }}
+                                {{ $thumbnail = .Resize "270x webp" }}
+                            {{ else }}
+                                {{ $thumbnail = .Resize "x250 webp" }}
+                            {{ end }}
+                        {{ end }}
+                        {{ with $thumbnail }}
+                        <div class="content" style="min-height:{{ $thumbnail.Height }}px;">
+                            <a href="{{ $articleLink }}">
+                                <div class="cartoon">
+                                    <img src="{{ $thumbnail.RelPermalink }}" width="{{ $thumbnail.Width }}" height="{{ $thumbnail.Height }}" alt="thumbnail">
+                                </div>
+                            </a>
+                        </div>
+                        {{ end }}
+                        {{ end }}
+                        {{ if eq .Params.post_type "article" }}
+                        <div class="media-content">
+                            <p class="title is-4"><a href="{{ $articleLink }}">{{ .Title }}</a></p>
+                            <p class="subtitle is-6">
+                                {{ if .Params.source }}
+                                <span class="source">{{ partial "source.html" . }}</span> - 
+                                {{ end }}
+                                <span class="date">{{ .PublishDate.Format "2 January 2006" }}</span>
+                            </p>
+                        </div>
+                        {{ $image := .Resources.GetMatch "image*" }}
+                        {{ $width := "0" }}
+                        {{ $height := "0" }}
+                        {{ with $image }}
+                        {{ if eq .MediaType.SubType "svg" }}
+                            {{ $width = "110" }}
+                            {{ $height = "auto" }}
+                        {{ else }}
+                            {{ if gt .Width .Height }}
+                                {{ $image = .Resize "110x webp" }}
+                            {{ else }}
+                                {{ $image = .Resize "x100 webp" }}
+                            {{ end }}
+                            {{ $width = $image.Width }}
+                            {{ $height = $image.Height }}
+                        {{ end }}
+                        <div class="content" style="min-height:{{ $height }}px;">
+                            <a href="{{ $articleLink }}">
+                                <div class="thumbnail">
+                                    <img src="{{ $image.RelPermalink }}" width="{{ $width }}" height="{{ $height }}" alt="thumbnail">
+                        {{ else }}
+                        <div class="content">
+                            <a href="{{ $articleLink }}">
+                                <div class="thumbnail">
+                        {{ end }}
+                                    <span>
+                                        {{ with .Description }}
+                                            {{ $.Scratch.Set "summary" (markdownify .) }}
+                                        {{ else }}
+                                            {{ $.Scratch.Set "summary" ((delimit (findRE "(<p.*?>(.|\n)*?</p>\\s*)+" .Content) "[&hellip;] ") | plainify | truncate (default 200 .Site.Params.summary_length) (default " &hellip;" .Site.Params.text.truncated ) | replaceRE "&amp;" "&" | safeHTML) }}
+                                        {{ end }}
+                                        {{ $.Scratch.Get "summary" }}
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                        {{ end }}
+                    </div>
+                  </div>
+                  <div class="article-break"></div>
+                {{ end }}
+                {{ if eq $colCounter 2 }}
+                    {{ $colCounter = 0 }}
+                {{ else }}
+                    {{ $colCounter = add $colCounter 1 }}
+                {{ end }}
+            {{ end }}
+        </div>
+    </div>
+    <div class="tile is-parent">
+        <div class="content">
+            {{ $colCounter = 0 }}
+            {{ range $news }}
+                {{ $articleLink := .RelPermalink }}
+                {{ if eq $colCounter 1 }}
+                <div class="card article-card">
+                    <div class="card-content article-card-content">
+                        {{ if eq .Params.post_type "cartoon" }}
+                        {{ $image := .Resources.GetMatch "image*" }}
+                        {{ $thumbnail := $image }}
+                        {{ with $image }}
+                            {{ if gt .Width .Height }}
+                                {{ $thumbnail = .Resize "270x webp" }}
+                            {{ else }}
+                                {{ $thumbnail = .Resize "x250 webp" }}
+                            {{ end }}
+                        {{ end }}
+                        {{ with $thumbnail }}
+                        <div class="content" style="min-height:{{ $thumbnail.Height }}px;">
+                            <a href="{{ $articleLink }}">
+                                <div class="cartoon">
+                                    <img src="{{ $thumbnail.RelPermalink }}" width="{{ $thumbnail.Width }}" height="{{ $thumbnail.Height }}" alt="thumbnail">
+                                </div>
+                            </a>
+                        </div>
+                        {{ end }}
+                        {{ end }}
+                        {{ if eq .Params.post_type "article" }}
+                        <div class="media-content">
+                            <p class="title is-4"><a href="{{ $articleLink }}">{{ .Title }}</a></p>
+                            <p class="subtitle is-6">
+                                {{ if .Params.source }}
+                                <span class="source">{{ partial "source.html" . }}</span> - 
+                                {{ end }}
+                                <span class="date">{{ .PublishDate.Format "2 January 2006" }}</span>
+                            </p>
+                        </div>
+                        {{ $image := .Resources.GetMatch "image*" }}
+                        {{ $width := "0" }}
+                        {{ $height := "0" }}
+                        {{ with $image }}
+                        {{ if eq .MediaType.SubType "svg" }}
+                            {{ $width = "110" }}
+                            {{ $height = "auto" }}
+                        {{ else }}
+                            {{ if gt .Width .Height }}
+                                {{ $image = .Resize "110x webp" }}
+                            {{ else }}
+                                {{ $image = .Resize "x100 webp" }}
+                            {{ end }}
+                            {{ $width = $image.Width }}
+                            {{ $height = $image.Height }}
+                        {{ end }}
+                        <div class="content" style="min-height:{{ $height }}px;">
+                            <a href="{{ $articleLink }}">
+                                <div class="thumbnail">
+                                    <img src="{{ $image.RelPermalink }}" width="{{ $width }}" height="{{ $height }}" alt="thumbnail">
+                        {{ else }}
+                        <div class="content">
+                            <a href="{{ $articleLink }}">
+                                <div class="thumbnail">
+                        {{ end }}
+                                    <span>
+                                        {{ with .Description }}
+                                            {{ $.Scratch.Set "summary" (markdownify .) }}
+                                        {{ else }}
+                                            {{ $.Scratch.Set "summary" ((delimit (findRE "(<p.*?>(.|\n)*?</p>\\s*)+" .Content) "[&hellip;] ") | plainify | truncate (default 200 .Site.Params.summary_length) (default " &hellip;" .Site.Params.text.truncated ) | replaceRE "&amp;" "&" | safeHTML) }}
+                                        {{ end }}
+                                        {{ $.Scratch.Get "summary" }}
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                        {{ end }}
+                    </div>
+                  </div>
+                  <div class="article-break"></div>
+                {{ end }}
+                {{ if eq $colCounter 2 }}
+                    {{ $colCounter = 0 }}
+                {{ else }}
+                    {{ $colCounter = add $colCounter 1 }}
+                {{ end }}
+            {{ end }}
+        </div>
+    </div>
+    <div class="tile is-parent">
+        <div class="content">
+            {{ $colCounter = 0 }}
+            {{ range $news }}
+                {{ $articleLink := .RelPermalink }}
+                {{ if eq $colCounter 2 }}
+                <div class="card article-card">
+                    <div class="card-content article-card-content">
+                        {{ if eq .Params.post_type "cartoon" }}
+                        {{ $image := .Resources.GetMatch "image*" }}
+                        {{ $thumbnail := $image }}
+                        {{ with $image }}
+                            {{ if gt .Width .Height }}
+                                {{ $thumbnail = .Resize "270x webp" }}
+                            {{ else }}
+                                {{ $thumbnail = .Resize "x250 webp" }}
+                            {{ end }}
+                        {{ end }}
+                        {{ with $thumbnail }}
+                        <div class="content" style="min-height:{{ $thumbnail.Height }}px;">
+                            <a href="{{ $articleLink }}">
+                                <div class="cartoon">
+                                    <img src="{{ $thumbnail.RelPermalink }}" width="{{ $thumbnail.Width }}" height="{{ $thumbnail.Height }}" alt="thumbnail">
+                                </div>
+                            </a>
+                        </div>
+                        {{ end }}
+                        {{ end }}
+                        {{ if eq .Params.post_type "article" }}
+                        <div class="media-content">
+                            <p class="title is-4"><a href="{{ $articleLink }}">{{ .Title }}</a></p>
+                            <p class="subtitle is-6">
+                                {{ if .Params.source }}
+                                <span class="source">{{ partial "source.html" . }}</span> - 
+                                {{ end }}
+                                <span class="date">{{ .PublishDate.Format "2 January 2006" }}</span>
+                            </p>
+                        </div>
+                        {{ $image := .Resources.GetMatch "image*" }}
+                        {{ $width := "0" }}
+                        {{ $height := "0" }}
+                        {{ with $image }}
+                        {{ if eq .MediaType.SubType "svg" }}
+                            {{ $width = "110" }}
+                            {{ $height = "auto" }}
+                        {{ else }}
+                            {{ if gt .Width .Height }}
+                                {{ $image = .Resize "110x webp" }}
+                            {{ else }}
+                                {{ $image = .Resize "x100 webp" }}
+                            {{ end }}
+                            {{ $width = $image.Width }}
+                            {{ $height = $image.Height }}
+                        {{ end }}
+                        <div class="content" style="min-height:{{ $height }}px;">
+                            <a href="{{ $articleLink }}">
+                                <div class="thumbnail">
+                                    <img src="{{ $image.RelPermalink }}" width="{{ $width }}" height="{{ $height }}" alt="thumbnail">
+                        {{ else }}
+                        <div class="content">
+                            <a href="{{ $articleLink }}">
+                                <div class="thumbnail">
+                        {{ end }}
+                                    <span>
+                                        {{ with .Description }}
+                                            {{ $.Scratch.Set "summary" (markdownify .) }}
+                                        {{ else }}
+                                            {{ $.Scratch.Set "summary" ((delimit (findRE "(<p.*?>(.|\n)*?</p>\\s*)+" .Content) "[&hellip;] ") | plainify | truncate (default 200 .Site.Params.summary_length) (default " &hellip;" .Site.Params.text.truncated ) | replaceRE "&amp;" "&" | safeHTML) }}
+                                        {{ end }}
+                                        {{ $.Scratch.Get "summary" }}
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                        {{ end }}
+                    </div>
+                  </div>
+                  <div class="article-break"></div>
+                {{ end }}
+                {{ if eq $colCounter 2 }}
+                    {{ $colCounter = 0 }}
+                {{ else }}
+                    {{ $colCounter = add $colCounter 1 }}
+                {{ end }}
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+{{ partial "pagination.html" . }}
+

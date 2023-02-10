@@ -1,0 +1,50 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    margin-top: auto;
+}
+
+.container.title-custom {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.footer {
+    background-color: #363636 !important;
+    color: #f5f5f5 !important;
+    padding: .5rem .5rem .5rem !important;
+}
+
+.navbar{
+    border-radius: 0em !important;
+}
+
+.navbar .navbar-menu {
+    border-radius: 0em !important;
+}
+
+.flexZero {
+    flex: 0;
+}
+
+.flexOne {
+    flex: 1;
+}
+
+.fullHeight {
+    height: 100%;
+}
+
+.episodeSummary {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+a.atag {
+    text-decoration: none !important;
+}

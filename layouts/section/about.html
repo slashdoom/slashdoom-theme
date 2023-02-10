@@ -1,0 +1,32 @@
+{{ partial "header.html" . }}
+
+{{ partial "breaking.html" . }}
+
+{{ partial "hero.html" . }}
+
+<div class="columns">
+    <div class="column is-three-quarters">
+        <section class="section">
+            <div class="content">
+                <h1 class="title">{{ .Title }}</h1>
+    
+                {{ .Content }}
+            </div>
+        </section>
+    </div>
+    <section class="section">
+        <div class="content">
+            <div class="column">
+                <h1 class="title is-4">Latest Articles</h1>
+                {{ $news := .Site.GetPage "/post" }}
+                {{ range $news.Data.Pages.ByPublishDate.Reverse  | first 20 }}
+                <p class="title is-7">
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </p>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+</div>
+
+{{ partial "footer.html" . }}

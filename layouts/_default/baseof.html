@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en-us" }}">
+<head>
+    {{ partial "head" . }}
+</head>
+<body>
+	<header>
+        {{ partial "navbar" . }}
+        {{ partial "header" . }}
+    </header>
+	<main>
+        {{ block "main" . }}{{ end }}
+    </main>
+	<footer class="footer is-fixed-bottom">
+      {{ partial "footer" . }}
+    </footer>
+
+    {{ partial "alpinejs" . }}
+</body>
+</html>

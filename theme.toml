@@ -1,0 +1,12 @@
+name = "tryfossdotcom"
+license = "MIT"
+licenselink = ""
+description = ""
+homepage = ""
+tags = ["blog"]
+features = ["blog"]
+min_version = "0.30.2"
+
+[author]
+  name = "yankiwi"
+  homepage = "https://gitlab.com/yankiwi/"

@@ -1,7 +1,7 @@
 {{ $w := default "100" (.Get 0) }}
 {{ $h := default "300" (.Get 1) }}
 {{ $r := ( .Inner | chomp) }}
-{{ $seed := "chocka" }}
+{{ $seed := "tryfoss" }}
 {{ $id := delimit (shuffle (split (md5 $seed) "" )) "" }}
 <script src="{{ "js/chart.js" | relURL}}"></script>
 <div style="width: {{ $w }}%;height: {{ $h }}px;margin: 0 auto">

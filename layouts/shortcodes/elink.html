@@ -15,5 +15,5 @@
         {{ $title = (.Get 1) }}
     {{ end }}
 {{ end }}
-{{ $inner := (.Inner) | markdownify }}
+{{ $inner := (.Inner) | safeHTML }}
 <a href="{{ $href }}" title="{{ $title }}" target="_blank" rel="noreferrer">{{ $inner }}</a>

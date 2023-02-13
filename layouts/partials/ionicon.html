@@ -1,15 +1,14 @@
+{{ $icon := .icon | default "logo-ionic" }}
 {{ $width := .width | default "24"}}
 {{ $height := .height | default "24" }}
-{{ $icon := resources.Get (printf "svg/ionicons/%s.svg" .icon) }}
-
-{{ $svg := ($icon.Content) }}
-
-{{ $s := (replaceRE `^.*?>(.*?)<\/svg>$` "$1" $svg) }}
-
+{{ $color := .color | default "currentColor" }}
+{{ $iconres := resources.Get (printf "svg/ionicons/%s.svg" $icon) }}
+{{ $svg := ($iconres.Content) }}
+{{ $svg := (replaceRE `^.*?>(.*?)<\/svg>$` "$1" $svg) }}
 {{ (printf `<svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
     width="%s"
     height="%s"
-    fill="currentColor"
-  >%s</svg>` $width $height $s) | safeHTML }}
+    fill="%s"
+  >%s</svg>` $width $height $color $svg) | safeHTML }}

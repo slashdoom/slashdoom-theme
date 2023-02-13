@@ -29,7 +29,7 @@
         {{ $color = (.Get 3) }}
     {{ end }}
 {{ end }}
-{{ $iconRes := resources.Get (printf "svg/ionicons/%s.svg" $icon) }}
+{{ $iconRes := resources.Get (printf "/svg/ionicons/%s.svg" $icon) }}
 {{ $svg := ($iconRes.Content) }}
 {{ $svg := (replaceRE `^.*?>(.*?)<\/svg>$` "$1" $svg) }}
 {{ (printf `<svg

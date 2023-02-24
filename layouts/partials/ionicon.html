@@ -2,9 +2,9 @@
 {{ $width := .width | default "24"}}
 {{ $height := .height | default "24" }}
 {{ $color := .color | default "currentColor" }}
-{{ $iconres := resources.Get (printf "/svg/ionicons/%s.svg" $icon) }}
-{{ $svg := ($iconres.Content) }}
-{{ $svg := (replaceRE `^.*?>(.*?)<\/svg>$` "$1" $svg) }}
+{{ $iconRes := resources.Get (printf "svg/ionicons/%s.svg" $icon) }}
+{{ $iconCon := ($iconRes.Content) }}
+{{ $svg := (replaceRE `^.*?>(.*?)<\/svg>$` "$1" $iconCon) }}
 {{ (printf `<svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"

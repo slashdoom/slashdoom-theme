@@ -29,9 +29,9 @@
         {{ $color = (.Get 3) }}
     {{ end }}
 {{ end }}
-{{ $iconRes := resources.Get (printf "/svg/ionicons/%s.svg" $icon) }}
-{{ $svg := ($iconRes.Content) }}
-{{ $svg := (replaceRE `^.*?>(.*?)<\/svg>$` "$1" $svg) }}
+{{ $iconRes := resources.Get (printf "svg/ionicons/%s.svg" $icon) }}
+{{ $iconCon := ($iconRes.Content) }}
+{{ $svg := (replaceRE `^.*?>(.*?)<\/svg>$` "$1" $iconCon) }}
 {{ (printf `<svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"

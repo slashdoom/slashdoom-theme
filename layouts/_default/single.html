@@ -25,28 +25,28 @@
                     {{ partial "share_links" . }}
                 </div>
                 {{ end }}
-                {{ if .Site.Params.showRelatedPosts }}
-                    {{ range first 1 (where (where .Site.Pages ".Params.tags" "intersect" .Params.tags) "Permalink" "!=" .Permalink) }}
-                        {{ $.Scratch.Set "has_related" true }}
-                    {{ end }}
-
-                    {{ if $.Scratch.Get "has_related" }}
-                    <p class="title is-4">Also See</p>
-                    <ul>
-                        {{ $num_to_show := .Site.Params.related_content_limit | default 5 }}
-                        {{ range first $num_to_show (where (where .Site.Pages ".Params.tags" "intersect" .Params.tags) "Permalink" "!=" .Permalink) }}
-                        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-                        {{ end }}
-                    </ul>
-                    {{ end }}
-                {{ end }}
             </div>
         </section>
         
     </div>
     <div class="column">
         <section class="section">
-            <p class="title is-4">Latest Articles</p>
+            {{ if .Site.Params.showRelatedPosts }}
+            {{ range first 1 (where (where .Site.Pages ".Params.tags" "intersect" .Params.tags) "Permalink" "!=" .Permalink) }}
+                {{ $.Scratch.Set "has_related" true }}
+            {{ end }}
+
+            {{ if $.Scratch.Get "has_related" }}
+            <p class="title is-4">Related Posts</p>
+            {{ $num_to_show := .Site.Params.related_content_limit | default 5 }}
+            {{ range first $num_to_show (where (where .Site.Pages ".Params.tags" "intersect" .Params.tags) "Permalink" "!=" .Permalink) }}
+            <p class="title is-7">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </p>
+            {{ end }}
+            {{ end }}
+            {{ end }}
+            <p class="title is-4">Latest Posts</p>
             {{ $posts := .Site.GetPage "/post" }}
             {{ range $posts.Data.Pages.ByPublishDate.Reverse  | first 20 }}
             <p class="title is-7">

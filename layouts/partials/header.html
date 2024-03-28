@@ -3,7 +3,7 @@
   <div class="hero-body">
     <figure class="image container is-128x128 mb-2">
       {{ with .Site.Params.hero.logo }}
-        <img class="is-rounded has-background-light" src="{{ .src | relURL }}" height="{{ .height }}" width="{{ .width }}" alt="{{ .alt }}">
+        <img class="is-rounded has-background-light portrait" src="{{ .src | relURL }}" height="{{ .height }}" width="{{ .width }}" alt="{{ .alt }}">
       {{ end }}
     </figure>
     <div class="media-content has-text-centered">

@@ -48,3 +48,18 @@ footer {
 a.atag {
     text-decoration: none !important;
 }
+
+img.portrait {
+    border-radius: 50%;
+    border: 5px solid #b3b3b3 !important;
+    width: 300px;
+    height: 300px
+}
+
+.portrait-container {
+    border-radius: 50%;
+    border: 65vw solid #000120;
+    margin: -63vw;
+    height: 340px;
+    width: 340px
+}

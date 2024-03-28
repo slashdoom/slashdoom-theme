@@ -2,7 +2,7 @@
   <div class="content">
     <div class="section">
       <div class="posts-list">
-        {{ $pag := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+        {{ $pag := .Paginate (where site.RegularPages "Type" "in" .Type) }}
         {{ range $pag.Pages }}
           {{ partial "post_preview" . }}
         {{ end }}

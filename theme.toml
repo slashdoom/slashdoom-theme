@@ -1,4 +1,4 @@
-name = "tryfossdotcom"
+name = "slashdoom"
 license = "MIT"
 licenselink = ""
 description = ""
@@ -8,5 +8,5 @@ features = ["blog"]
 min_version = "0.30.2"
 
 [author]
-  name = "yankiwi"
-  homepage = "https://gitlab.com/yankiwi/"
+  name = "slashdoom"
+  homepage = "https://gitlab.com/slashdoom/"

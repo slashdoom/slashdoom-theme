@@ -1,1 +1,1 @@
-# tryfossdotcom-theme
+# slashdoom-theme
